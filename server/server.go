@@ -1,10 +1,29 @@
 package server
 
+import(
+	"github.com/diegoseso/parchis/models"
+	"github.com/davecgh/go-spew/spew"
+)
+
 type Server struct{
 
 }
 
-func(S *Server)
+func(S *Server)Run(){
 
-http.HandleFunc("/", handler)
-http.ListenAndServe(":8080", nil)
+	InitializeRoomsFromConfig()
+	IniitializeBoardsOnRoom()
+}
+
+func IniitializeBoardsOnRoom(){
+
+}
+
+func InitializeRoomsFromConfig(){
+	room := &models.Room{}
+	AddBoardToRoom(room)
+}
+
+func AddBoardToRoom(Room *models.Room){
+	spew.Dump(Room)
+}
