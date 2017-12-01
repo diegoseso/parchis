@@ -23,13 +23,13 @@ func NewBoard() *Board{
 
 func (B *Board)SetPlayer(Player Player)error{
 	if len(B.Players) >= JAILS {
-		return error
+		return nil
 	}
 	B.Players = append(B.Players, Player)
 	return nil
 }
 
-func (B *Board)StartNewMatch{
+func (B *Board)StartNewMatch() {
 	if B.Status.IsReady() {
 		B.Match = NewMatch()
 		B.Status.Playing()

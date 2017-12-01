@@ -9,10 +9,17 @@ type Server struct{
 
 }
 
+func NewServer() *Server{
+	return &Server{}
+}
+
 func(S *Server)Run(){
 
 	InitializeRoomsFromConfig()
 	IniitializeBoardsOnRoom()
+}
+
+func(S *Server)Stop(){
 }
 
 func IniitializeBoardsOnRoom(){

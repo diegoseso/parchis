@@ -33,14 +33,17 @@ func(S *Status)Playing() error{
 	if S.Value == READY {
 		S.Value = PLAYING
 	}
+	return nil
 }
 
 func(S *Status)Available() error{
 	S.Value = AVAILABLE
+	return nil
 }
 
 func(S *Status)Ready() error{
     if S.Value == PLAYING || S.Value == AVAILABLE {
 		S.Value = READY
 	}
+	return nil
 }
