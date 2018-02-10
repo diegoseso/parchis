@@ -4,7 +4,23 @@ import "github.com/nu7hatch/gouuid"
 
 type Match struct{
     Id string
-    History *History
+    MatchStatus *MatchStatus
+    //History *History
+}
+
+type MatchStatus struct{
+    BoardPicture map[int]byte
+}
+
+func NewMatchStatus() *MatchStatus{
+    // Here we are gonna make a bytes map
+    bs := make(map[int]byte)
+
+    for i:=1;i<=4; i++{
+        bs[1] = 0
+    }
+
+    return &MatchStatus{BoardPicture: bs }
 }
 
 func NewMatch() *Match {
@@ -13,6 +29,9 @@ func NewMatch() *Match {
 
     return &Match{
         Id : idString,
-        History: &History{},
+        MatchStatus: NewMatchStatus(),
     }
 }
+
+type TurnControl int
+

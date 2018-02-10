@@ -8,6 +8,8 @@ import(
 
 func TestDice(t *testing.T) {
 	dice := NewDice()
-	value := dice.Shake()
-	spew.Dump(value)
+	for i:= 1; i<100; i++{
+		value := dice.Shake()
+		spew.Dump(value)
+	}
 }

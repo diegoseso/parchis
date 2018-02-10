@@ -1,8 +1,6 @@
 package server
 
 import(
-	"github.com/diegoseso/parchis/models"
-	"github.com/davecgh/go-spew/spew"
 	"net"
 	"log"
 	"io"
@@ -57,10 +55,10 @@ func(S *Server)iniitializeBoardsOnRoom(){
 }
 
 func(S *Server)initializeRoomsFromConfig(){
-	room := &models.Room{}
-	AddBoardToRoom(room)
+	//room := &models.Room{}
+	//AddBoardToRoom(room)
 }
 
-func AddBoardToRoom(Room *models.Room){
+/*func AddBoardToRoom(Room *models.Room){
 	spew.Dump(Room)
-}
+}*/
