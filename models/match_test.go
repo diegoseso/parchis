@@ -39,8 +39,10 @@ func TestCompleteMatchStandAlone(t *testing.T) {
 			control = 1
 		}
 
-		dice.Shake()
-		t.Logf("Player %d got a %d", control, dice.GetValue())
+		s := dice.Shake()
+		t.Logf("%v", s)
+		t.Logf("%v", dice.GetValue())
+		t.Logf("Player %v got a %v", control, dice.GetValue())
 
 		if board.Match.MatchStatus.BoardPicture[int(control)] == 0{
 			board.Match.MatchStatus.BoardPicture[int(control)] += byte(dice.GetValue())

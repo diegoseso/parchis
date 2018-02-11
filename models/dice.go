@@ -11,11 +11,11 @@ type Dice struct {
 	value int
 }
 
-func NewDice() Dice {
-	return Dice{}
+func NewDice() *Dice {
+	return &Dice{}
 }
 
-func (d Dice) Shake()int {
+func (d *Dice) Shake()int {
 
     now := time.Now()
     nanoSeed := now.UnixNano()
@@ -25,6 +25,6 @@ func (d Dice) Shake()int {
     return d.value
 }
 
-func (d Dice) GetValue()int {
+func (d *Dice) GetValue()int {
 	return d.value
 }
