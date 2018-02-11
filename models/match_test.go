@@ -11,12 +11,26 @@ func TestNewMatchStatus(t *testing.T) {
 	spew.Dump(ms)
 }
 
-func TestMatchStatus_CalculatePosition(t *testing.T) {
+func TestMatchStatus_CalculatePosition_Bouncing(t *testing.T) {
 
 	match := NewMatch()
 
 	match.MatchStatus.CalculatePosition(1, 5)
-	t.Log(match.MatchStatus.CalculatePosition(1, 72))
+	bounce := match.MatchStatus.CalculatePosition(1, 72)
+	if bounce != 73 {
+		t.Fatal("The bouncing is not working ok")
+	}
+}
+
+func TestMatchStatus_CalculatePosition_Winning(t *testing.T) {
+
+	match := NewMatch()
+
+	match.MatchStatus.CalculatePosition(1, 5)
+	arrival := match.MatchStatus.CalculatePosition(1, 70)
+	if arrival != 75 {
+		t.Fatal("The arrival is not working ok, probably cause the bouncing")
+	}
 }
 
 func TestCompleteMatchStandAlone(t *testing.T) {
@@ -58,7 +72,7 @@ func TestCompleteMatchStandAlone(t *testing.T) {
 			board.Match.MatchStatus.CalculatePosition(int(control), dice.GetValue())
 		}
 
-		if board.Match.MatchStatus.BoardPicture[int(control)] > 75 {
+		if board.Match.MatchStatus.BoardPicture[int(control)] == 75 {
 			t.Logf("Player%v wins", control)
 			t.Log(board.Match.MatchStatus.BoardPicture)
 			endGame = true
