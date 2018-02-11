@@ -3,13 +3,20 @@ package models
 import (
 	"testing"
 	"github.com/davecgh/go-spew/spew"
-	"fmt"
 )
 
 
 func TestNewMatchStatus(t *testing.T) {
 	ms := NewMatchStatus()
 	spew.Dump(ms)
+}
+
+func TestMatchStatus_CalculatePosition(t *testing.T) {
+
+	match := NewMatch()
+
+	match.MatchStatus.CalculatePosition(1, 5)
+	t.Log(match.MatchStatus.CalculatePosition(1, 72))
 }
 
 func TestCompleteMatchStandAlone(t *testing.T) {
@@ -35,7 +42,7 @@ func TestCompleteMatchStandAlone(t *testing.T) {
 
 	for endGame != true {
 		t.Log("Got into the playing loop")
-		if control == 4 {
+		if control == JAILS + 1 {
 			control = 1
 		}
 
@@ -44,15 +51,16 @@ func TestCompleteMatchStandAlone(t *testing.T) {
 		t.Logf("%v", dice.GetValue())
 		t.Logf("Player %v got a %v", control, dice.GetValue())
 
-		if board.Match.MatchStatus.BoardPicture[int(control)] == 0{
-			board.Match.MatchStatus.BoardPicture[int(control)] += byte(dice.GetValue())
-		}
 		if dice.GetValue() == OPENING_VALUE && board.Match.MatchStatus.BoardPicture[int(control)] == 0{
 			board.Match.MatchStatus.BoardPicture[int(control)] = 1
 		}
+		if board.Match.MatchStatus.BoardPicture[int(control)] > 0{
+			board.Match.MatchStatus.CalculatePosition(int(control), dice.GetValue())
+		}
 
 		if board.Match.MatchStatus.BoardPicture[int(control)] > 75 {
-			fmt.Println("Player%s wins", control)
+			t.Logf("Player%v wins", control)
+			t.Log(board.Match.MatchStatus.BoardPicture)
 			endGame = true
 		}
 
