@@ -18,15 +18,15 @@ const OPENING_VALUE = 5
 
 type Board struct {
 	Players []Player
-	Match  *Match
+	Match   *Match
 	//Status *Status
 }
 
-func NewBoard() *Board{
+func NewBoard() *Board {
 	return &Board{}
 }
 
-func (B *Board)SetPlayer(Player Player)error{
+func (B *Board) SetPlayer(Player Player) error {
 	if len(B.Players) >= JAILS {
 		return errors.New("No more players allowed")
 	}
@@ -34,6 +34,6 @@ func (B *Board)SetPlayer(Player Player)error{
 	return nil
 }
 
-func (B *Board)StartNewMatch() {
-		B.Match = NewMatch()
+func (B *Board) StartNewMatch() {
+	B.Match = NewMatch()
 }
