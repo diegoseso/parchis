@@ -11,7 +11,7 @@ import (
 /**
  *
  */
-const BOXES = 76
+const BOXES = 75
 const JAILS = 4
 const TOKENS_PER_PLAYER = 4
 const OPENING_VALUE = 5

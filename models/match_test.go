@@ -33,6 +33,40 @@ func TestMatchStatus_CalculatePosition_Winning(t *testing.T) {
 	}
 }
 
+func TestMatchStatus_IsAWinner(t *testing.T) {
+	match := NewMatch()
+
+	match.MatchStatus.BoardPicture[1][1] = byte(BOXES)
+	match.MatchStatus.BoardPicture[1][2] = byte(BOXES)
+	match.MatchStatus.BoardPicture[1][3] = byte(BOXES)
+	match.MatchStatus.BoardPicture[1][4] = byte(BOXES)
+
+	if( !match.MatchStatus.IsAWinner(1)){
+		t.Fatal("Is not calculating the winner well...")
+	}
+
+}
+
+
+func TestMatchStatus_GetMovablePawns(t *testing.T) {
+	match := NewMatch()
+
+	match.MatchStatus.BoardPicture[1] = PlayerStatus{1:0, 2:1, 3:1, 4:0}
+
+	if len(match.MatchStatus.GetMovablePawns(1)) != 2 {
+		t.Fatal("We are not getting the movable pawns right")
+	}
+}
+
+func TestMatchStatus_GetPawnFromJail(t *testing.T) {
+	match := NewMatch()
+
+	_, err := match.MatchStatus.GetPawnFromJail(1)
+	if err != nil{
+		t.Fatal("a Riot has happened at Jail")
+	}
+}
+
 func TestCompleteMatchStandAlone(t *testing.T) {
 	t.Log("Got into the playing loop")
 	player1 := Player{Username:"one"}
@@ -65,19 +99,27 @@ func TestCompleteMatchStandAlone(t *testing.T) {
 		t.Logf("%v", dice.GetValue())
 		t.Logf("Player %v got a %v", control, dice.GetValue())
 
-		if dice.GetValue() == OPENING_VALUE && board.Match.MatchStatus.BoardPicture[int(control)] == 0{
-			board.Match.MatchStatus.BoardPicture[int(control)] = 1
-		}
-		if board.Match.MatchStatus.BoardPicture[int(control)] > 0{
-			board.Match.MatchStatus.CalculatePosition(int(control), dice.GetValue())
+		if dice.GetValue() == OPENING_VALUE && board.Match.MatchStatus.IsThereAPawnInJail(int(control)){
+			pawnIndex , err := board.Match.MatchStatus.GetPawnFromJail(int(control))
+			if err != nil{
+				t.Fatal("There is a hell of an error on the pawns")
+			}
+			board.Match.MatchStatus.BoardPicture[int(control)][pawnIndex] = 1
+			control++
+			continue
 		}
 
-		if board.Match.MatchStatus.BoardPicture[int(control)] == 75 {
+		// Make a move
+		for pawn := range board.Match.MatchStatus.GetMovablePawns(int(control)){
+				board.Match.MatchStatus.BoardPicture[int(control)][pawn] += byte(dice.GetValue())
+				break
+		}
+
+		if(board.Match.MatchStatus.IsAWinner(int(control))){
 			t.Logf("Player%v wins", control)
 			t.Log(board.Match.MatchStatus.BoardPicture)
 			endGame = true
 		}
-
 		control++
 	}
 
