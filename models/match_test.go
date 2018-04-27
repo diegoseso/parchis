@@ -85,9 +85,8 @@ func TestCompleteMatchStandAlone(t *testing.T) {
 	control := TurnControl(1)
 	testLoopControl := 0
 
-	for testLoopControl <= 2000 && endGame == false {
+	for endGame == false {
 		testLoopControl++
-		t.Log("Got into the playing loop")
 
 		// @TODO Loop through all players, right now it considers there are always 4 players...
 		if control == JAILS+1 {
@@ -108,12 +107,7 @@ func TestCompleteMatchStandAlone(t *testing.T) {
 			board.Match.MatchStatus.BoardPicture[int(control)][pawnIndex] = 1
 
 		} else {
-
-			// Make a move with the dice result
-			//for pawn := range board.Match.MatchStatus.GetMovablePawns(int(control)) {
 			board.Match.MatchStatus.CalculatePosition(int(control), dice.GetValue())
-			//	break
-			//}
 		}
 
 		if board.Match.MatchStatus.IsAWinner(int(control)) {
@@ -121,9 +115,8 @@ func TestCompleteMatchStandAlone(t *testing.T) {
 			t.Log(board.Match.MatchStatus.BoardPicture)
 			endGame = true
 		}
-
 		t.Log(board.Match.MatchStatus.BoardPicture)
 		control++
 	}
-
+	t.Logf("%v turns play before we get a Winner", testLoopControl)
 }
