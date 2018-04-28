@@ -20,16 +20,37 @@
   </head>
   <body>
     <div class="container">
-      <h1>Welcome to the Parchis HTML5!</h1>
-      <div id="game" class="text-center"></div>
+      <h1>Welcome to Parchis Kings!</h1>
+      <div id="game" class="text-center" hidden="hidden"></div>
       <div class="clearfix"></div>
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="bower_components/phaser/build/phaser.min.js"></script>
-    <script type="text/javascript" src="js/general.js"></script>
+    <script type="text/javascript" src="js/states/BootState.js"></script>
+    <script type="text/javascript" src="js/states/LoginState.js"></script>
+    <script type="text/javascript" src="js/states/PlayState.js"></script>
+    <script type="text/javascript" src="js/init.js"></script>
+    <div id="login-form" role="form" hidden="hidden" class="col-md-4 col-md-offset-5">
+        <div class="controls">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input id="username" type="text" name="name" class="form-control" placeholder="Please enter a username *" required="required" data-error="Username is taken.">
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <button id="login-play" type="button" class="btn btn-primary form-control">Play</button>
+                </div>
+            </div>
+        </div>
+    </div>
   </body>
 </html>

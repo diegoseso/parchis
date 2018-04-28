@@ -16,3 +16,14 @@ The simplest premises of this Gameserver are:
 # How to run this project
 
 docker run -dit -p 8001:80 -v /home/diegoseso/go/src/github.com/diegoseso/parchis/frontend:/usr/share/nginx/html/html nginx
+
+## Other dependencies:
+- jQuery
+- Bootstrap
+
+## Instalation
+This project need bower dependences. Go to folder project and run the following command:
+
+```
+bower install
+```

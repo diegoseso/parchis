@@ -1,6 +1,6 @@
 var BootState = {
-
     preload: function(){
+        console.log('Enter Boot state preload');
         game.load.image('board', 'img/board.png');
         game.load.image('blue', 'img/blue.png');
         game.load.image('green', 'img/green.png');

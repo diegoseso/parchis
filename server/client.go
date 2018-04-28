@@ -6,6 +6,7 @@ import (
 	"time"
 	"github.com/gorilla/websocket"
 	"bytes"
+	"github.com/davecgh/go-spew/spew"
 )
 
 const (
@@ -65,6 +66,7 @@ func (c *Client) readPump() {
 			break
 		}
 		message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
+		spew.Dump(string(message))
 		c.hub.broadcast <- message
 	}
 }
