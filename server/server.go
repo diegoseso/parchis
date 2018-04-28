@@ -5,6 +5,7 @@ import(
 	"log"
 	"io"
 	"time"
+	"net/http"
 )
 
 type Server struct{
@@ -15,10 +16,23 @@ func NewServer() *Server{
 	return &Server{}
 }
 
+var addr string
+
 func(S *Server)Run(){
-    S.listen()
+    /*S.listen()
 	S.initializeRoomsFromConfig()
-	S.iniitializeBoardsOnRoom()
+	S.iniitializeBoardsOnRoom()*/
+	addr = "localhost:8081"
+
+	hub := newHub()
+	go hub.run()
+	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
+		serveWs(hub, w, r)
+	})
+	err := http.ListenAndServe(addr, nil)
+	if err != nil {
+		log.Fatal("ListenAndServe: ", err)
+	}
 }
 
 func(S *Server)listen(){

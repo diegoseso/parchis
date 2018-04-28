@@ -13,3 +13,6 @@ The simplest premises of this Gameserver are:
   * A Server has room´s, each room has it´s own characteristics, Inside a Room can be any number of boards,
   a board can hold a Match at a time, the Match has players, an status and a history.
 
+# How to run this project
+
+docker run -dit -p 8001:80 -v /home/diegoseso/go/src/github.com/diegoseso/parchis/frontend:/usr/share/nginx/html/html nginx

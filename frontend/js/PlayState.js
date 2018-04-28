@@ -1,24 +1,3 @@
-var game = new Phaser.Game(600, 600, Phaser.AUTO, 'game', {
-    preload: preload,
-    create: create,
-    update: update,
-}, true);
-
-function preload() {
-	game.load.image('board', 'img/board.png');
-    game.load.image('blue', 'img/blue.png');
-    game.load.image('green', 'img/green.png');
-    game.load.image('red', 'img/red.png');
-    game.load.image('yellow', 'img/yellow.png');
-    game.load.spritesheet('dice-init', 'img/dice-init.png', 157, 158, 4);
-    game.load.image('dice1', 'img/dice1.png');
-    game.load.image('dice2', 'img/dice2.png');
-    game.load.image('dice3', 'img/dice3.png');
-    game.load.image('dice4', 'img/dice4.png');
-    game.load.image('dice5', 'img/dice5.png');
-    game.load.image('dice6', 'img/dice6.png');
-}
-
 var board;
 var character;
 var players = ['red', 'yellow'];
@@ -137,7 +116,7 @@ boardSpecial['yellow'][2] = [510, 570, false];
 boardSpecial['yellow'][3] = [480, 570, false];
 
 function create() {
-	// Board
+    // Board
     board = game.add.sprite(game.width, game.height, 'board');
     board.anchor.set(1, 1);
 
@@ -190,39 +169,39 @@ function create() {
 function update() {
     // Character keyboard movement
     if (!gameEnds) {
-    	showDices();
+        showDices();
     }
 }
 
 function initGame() {
-	red01.x = boardSpaces[39][0];
-	red01.y = boardSpaces[39][1];
-	players['red'] = 39;
+    red01.x = boardSpaces[39][0];
+    red01.y = boardSpaces[39][1];
+    players['red'] = 39;
 
-	yellow01.x = boardSpaces[5][0];
-	yellow01.y = boardSpaces[5][1];
-	players['yellow'] = 5;
+    yellow01.x = boardSpaces[5][0];
+    yellow01.y = boardSpaces[5][1];
+    players['yellow'] = 5;
 
-	showDices();
+    showDices();
 }
 
 function throwingDicesRed() {
 
-		animDice01 = diceInit01.animations.add('dice-init');
+    animDice01 = diceInit01.animations.add('dice-init');
 
-		//animDice01.onStart.add(dicesStarted, this);
-	    animDice01.onLoop.add(dicesRedLooped, this);
-	    //animDice01.onComplete.add(dicesStopped, this);
+    //animDice01.onStart.add(dicesStarted, this);
+    animDice01.onLoop.add(dicesRedLooped, this);
+    //animDice01.onComplete.add(dicesStopped, this);
 
-	    animDice01.play(12, true);
+    animDice01.play(12, true);
 
-	    animDice02 = diceInit02.animations.add('dice-init');
+    animDice02 = diceInit02.animations.add('dice-init');
 
-		//animDice02.onStart.add(dicesStarted, this);
-	    animDice02.onLoop.add(dicesRedLooped, this);
-	    //animDice02.onComplete.add(dicesStopped, this);
+    //animDice02.onStart.add(dicesStarted, this);
+    animDice02.onLoop.add(dicesRedLooped, this);
+    //animDice02.onComplete.add(dicesStopped, this);
 
-	    animDice02.play(12, true);
+    animDice02.play(12, true);
 
 }
 
@@ -232,33 +211,33 @@ function dicesRedLooped(sprite, animation) {
     {
         animDice01.loop = false;
         animDice02.loop = false;
-		diceOne = getRandomInt();
-		diceTwo = getRandomInt();
-		diceInit01.loadTexture('dice' + diceOne, 0, false);
-		diceInit02.loadTexture('dice' + diceTwo, 0, false);
+        diceOne = getRandomInt();
+        diceTwo = getRandomInt();
+        diceInit01.loadTexture('dice' + diceOne, 0, false);
+        diceInit02.loadTexture('dice' + diceTwo, 0, false);
 
-		movePlayer('red', diceOne + diceTwo);
+        movePlayer('red', diceOne + diceTwo);
     }
 
 }
 
 function throwingDicesYellow() {
 
-		animDice03 = diceInit03.animations.add('dice-init');
+    animDice03 = diceInit03.animations.add('dice-init');
 
-		//animDice01.onStart.add(dicesStarted, this);
-	    animDice03.onLoop.add(dicesYellowLooped, this);
-	    //animDice01.onComplete.add(dicesStopped, this);
+    //animDice01.onStart.add(dicesStarted, this);
+    animDice03.onLoop.add(dicesYellowLooped, this);
+    //animDice01.onComplete.add(dicesStopped, this);
 
-	    animDice03.play(12, true);
+    animDice03.play(12, true);
 
-	    animDice04 = diceInit04.animations.add('dice-init');
+    animDice04 = diceInit04.animations.add('dice-init');
 
-		//animDice02.onStart.add(dicesStarted, this);
-	    animDice04.onLoop.add(dicesYellowLooped, this);
-	    //animDice02.onComplete.add(dicesStopped, this);
+    //animDice02.onStart.add(dicesStarted, this);
+    animDice04.onLoop.add(dicesYellowLooped, this);
+    //animDice02.onComplete.add(dicesStopped, this);
 
-	    animDice04.play(12, true);
+    animDice04.play(12, true);
 
 }
 
@@ -268,18 +247,18 @@ function dicesYellowLooped(sprite, animation) {
     {
         animDice03.loop = false;
         animDice04.loop = false;
-		diceOne = getRandomInt();
-		diceTwo = getRandomInt();
-		diceInit03.loadTexture('dice' + diceOne, 0, false);
-		diceInit04.loadTexture('dice' + diceTwo, 0, false);
+        diceOne = getRandomInt();
+        diceTwo = getRandomInt();
+        diceInit03.loadTexture('dice' + diceOne, 0, false);
+        diceInit04.loadTexture('dice' + diceTwo, 0, false);
 
-		movePlayer('yellow', diceOne + diceTwo);
+        movePlayer('yellow', diceOne + diceTwo);
     }
 
 }
 
 function resetDices() {
-	diceInit01 = game.add.sprite(60, 150, 'dice-init');
+    diceInit01 = game.add.sprite(60, 150, 'dice-init');
     diceInit01.anchor.set(0.5, 0.5);
     diceInit01.scale.setTo(.5, .5);
 
@@ -309,86 +288,86 @@ function resetDices() {
 }
 
 function getRandomInt() {
-	min = 1;
-	max = 7; // Max number excluded
-  	return Math.floor(Math.random() * (max - min)) + min;
+    min = 1;
+    max = 7; // Max number excluded
+    return Math.floor(Math.random() * (max - min)) + min;
 }
 
 function setDicesRed () {
-	throwingDicesRed();
+    throwingDicesRed();
     setTimeout(function()
     {
-	    activePlayer = 'yellow';
-	    resetDices();
+        activePlayer = 'yellow';
+        resetDices();
     }, 3000);
 }
 
 function setDicesYellow () {
-	throwingDicesYellow();
+    throwingDicesYellow();
     setTimeout(function()
     {
-    	activePlayer = 'red';
-    	resetDices();
+        activePlayer = 'red';
+        resetDices();
     }, 3000);
 }
 
 function showDices() {
-	diceInit01.visible = false;
-	diceInit02.visible = false;
-	diceInit03.visible = false;
-	diceInit04.visible = false;
+    diceInit01.visible = false;
+    diceInit02.visible = false;
+    diceInit03.visible = false;
+    diceInit04.visible = false;
 
-	if (activePlayer == 'red') {
-		diceInit01.visible = true;
-		diceInit02.visible = true;
-	} else if (activePlayer == 'yellow') {
-		diceInit03.visible = true;
-		diceInit04.visible = true;
-	}
+    if (activePlayer == 'red') {
+        diceInit01.visible = true;
+        diceInit02.visible = true;
+    } else if (activePlayer == 'yellow') {
+        diceInit03.visible = true;
+        diceInit04.visible = true;
+    }
 }
 
 function movePlayer(player, result) {
-	var oldPosition;
+    var oldPosition;
 
-	if (player == 'red') {
-		oldPosition = players['red'];
+    if (player == 'red') {
+        oldPosition = players['red'];
 
-		playerAnimation (red01, players['red'], result);
+        playerAnimation (red01, players['red'], result);
 
-		players['red'] = oldPosition + result;
+        players['red'] = oldPosition + result;
 
-		if (players['red'] > 68) {
-			players['red'] = players['red'] - 68;
-		}
+        if (players['red'] > 68) {
+            players['red'] = players['red'] - 68;
+        }
 
-	} else if (player == 'yellow') {
-		oldPosition = players['yellow'];
+    } else if (player == 'yellow') {
+        oldPosition = players['yellow'];
 
-		playerAnimation (yellow01, players['yellow'], result);
+        playerAnimation (yellow01, players['yellow'], result);
 
-		players['yellow'] = oldPosition + result;
+        players['yellow'] = oldPosition + result;
 
-		if (players['yellow'] > 68) {
-			players['yellow'] = players['yellow'] - 68;
-		}
-	}
+        if (players['yellow'] > 68) {
+            players['yellow'] = players['yellow'] - 68;
+        }
+    }
 }
 
 function playerAnimation (item, position, movements) {
-   setTimeout(function () {
-      movements--;
-      position++;
-      if (position > 68) {
-      	position = 1;
-      }
-      if (movements >= 0) {
-         playerAnimation(item, position, movements);
-         game.add.tween(item).to(
-         	{
-         		x : boardSpaces[position][0],
-         		y : boardSpaces[position][1]
-         	}
-         , 150, Phaser.Easing.Linear.None, true);
-      }
-   }, 150);
+    setTimeout(function () {
+        movements--;
+        position++;
+        if (position > 68) {
+            position = 1;
+        }
+        if (movements >= 0) {
+            playerAnimation(item, position, movements);
+            game.add.tween(item).to(
+                {
+                    x : boardSpaces[position][0],
+                    y : boardSpaces[position][1]
+                }
+                , 150, Phaser.Easing.Linear.None, true);
+        }
+    }, 150);
 }
