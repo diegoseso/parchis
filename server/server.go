@@ -19,15 +19,15 @@ func NewServer() *Server{
 var addr string
 
 func(S *Server)Run(){
-    /*S.listen()
-	S.initializeRoomsFromConfig()
-	S.iniitializeBoardsOnRoom()*/
-	addr = "localhost:8081"
+    addr = "localhost:8081"
 
 	hub := newHub()
 	go hub.run()
+	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
+		loginHandler(w, r)
+	})
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
-		serveWs(hub, w, r)
+		wsHandler(hub, w, r)
 	})
 	err := http.ListenAndServe(addr, nil)
 	if err != nil {
@@ -62,17 +62,5 @@ func handleConn( c net.Conn){
 }
 
 func(S *Server)Stop(){
+ //@TODO
 }
-
-func(S *Server)iniitializeBoardsOnRoom(){
-
-}
-
-func(S *Server)initializeRoomsFromConfig(){
-	//room := &models.Room{}
-	//AddBoardToRoom(room)
-}
-
-/*func AddBoardToRoom(Room *models.Room){
-	spew.Dump(Room)
-}*/
