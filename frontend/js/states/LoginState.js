@@ -1,6 +1,6 @@
 var isUserSet;
-var sconn;
 var username;
+var httpLogin = "http://localhost:8081/login";
 var server = {address: "ws://localhost:8081/ws"};
 
 function isUserSet(){
@@ -18,10 +18,33 @@ function LoginScreen(){
     $('#login-form').show();
     $('#login-play').click(function(){
         username = $('#username').val();
+        // Here we make an http request to validate against server
+        LoginServer(username);
         $('#login-form').hide();
         Login(username);
     });
 }
+
+function LoginServer(username){
+    console.log('Trying to log to the server');
+    axios.get(httpLogin, {
+        params: {
+            username: username
+        }
+    })
+        .then(function (response) {
+            console.log(response);
+            var bodyResponse = JSON.parse(response.data)
+            if( bodyResponse.success = true ){
+                username = bodyResponse.data;
+                console.log(username);
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+
 
 function Login(username){
     if (!sconn) {
@@ -32,9 +55,42 @@ function Login(username){
     }
     var newLogin = {message:'login', username : username}
     sconn.send(JSON.stringify(newLogin));
+    Listen();
     currentUsername = Cookies.set('username', username);
+    $('#my-user').html(username);
     // Login process to the server
-    $('#game').show();
+    $('#whole-game').show();
+    $('#whole-game').css('display', 'inline-flex');
+}
+
+
+function Listen(){
+    sconn.onmessage = function (event){
+        console.log('Message received');
+        msg = JSON.parse(event.data);
+        console.log(msg)
+        if(msg.type == 'onlinePLayers'){
+            DisplaysUsersOnChat(msg.data);
+        }
+    };
+}
+
+function DisplaysUsersOnChat(data){
+    var playersHtml;
+    data.Players.forEach(function(player){
+         playersHtml = playersHtml +  '<li class="contact">' +
+        '<div class="wrap">' +
+        '<span class="contact-status online"></span>' +
+        '<img src="img/smiley-avatar.png" alt="" />' +
+        '<div class="meta">' +
+        '<p class="name">' + player + '</p>' +
+        '<p class="preview">I was thinking that we could have chicken tonight, sounds good?</p>' +
+        '</div>' +
+        '</div>' +
+        '</li>'
+    });
+    $('#contacts-ul').html(playersHtml);
+
 }
 
 function ServerConnect(){
@@ -45,7 +101,7 @@ function ServerConnect(){
             resolve(sconn)
         };
         sconn.onclose = function (evt) {
-            reject(err);
+            reject();
         };
     });
 }

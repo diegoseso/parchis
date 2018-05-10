@@ -6,6 +6,7 @@ import(
 	"io"
 	"time"
 	"net/http"
+	"os"
 )
 
 type Server struct{
@@ -24,11 +25,13 @@ func(S *Server)Run(){
 	hub := newHub()
 	go hub.run()
 	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
-		loginHandler(w, r)
+		enableCors(&w)
+		LoginHandler(w, r)
 	})
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
 		wsHandler(hub, w, r)
 	})
+
 	err := http.ListenAndServe(addr, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
@@ -50,6 +53,10 @@ func(S *Server)listen(){
 	}
 }
 
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+}
+
 func handleConn( c net.Conn){
 	defer c.Close()
 	for {
@@ -62,5 +69,5 @@ func handleConn( c net.Conn){
 }
 
 func(S *Server)Stop(){
- //@TODO
+    os.Exit(1)
 }

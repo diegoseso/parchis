@@ -101,7 +101,6 @@ boardSpecial['yellow'][6] = [300, 409];
 boardSpecial['yellow'][7] = [300, 382];
 boardSpecial['yellow'][8] = [270, 350];
 
-// [x, y, occuped]
 var boardStart = ['red', 'yellow'];
 boardSpecial['red'] = [];
 boardSpecial['red'][0] = [30, 30, false];
@@ -145,10 +144,6 @@ var PlayState = {
     red04.anchor.set(0.5, 0.5);
     red04.scale.setTo(.6, .6);
 
-    // Load dices and animations
-
-    // Yellow elements
-    // Yellow player
     yellow01 = game.add.sprite(boardSpecial['yellow'][0][0], boardSpecial['yellow'][0][1], 'yellow');
     yellow01.anchor.set(0.5, 0.5);
     yellow01.scale.setTo(.6, .6);
@@ -170,7 +165,6 @@ var PlayState = {
     },
 
     update: function(){
-        // Character keyboard movement
         if (!gameEnds) {
             showDices();
         }
@@ -193,19 +187,10 @@ function initGame() {
 function throwingDicesRed() {
 
     animDice01 = diceInit01.animations.add('dice-init');
-
-    //animDice01.onStart.add(dicesStarted, this);
     animDice01.onLoop.add(dicesRedLooped, this);
-    //animDice01.onComplete.add(dicesStopped, this);
-
     animDice01.play(12, true);
-
     animDice02 = diceInit02.animations.add('dice-init');
-
-    //animDice02.onStart.add(dicesStarted, this);
     animDice02.onLoop.add(dicesRedLooped, this);
-    //animDice02.onComplete.add(dicesStopped, this);
-
     animDice02.play(12, true);
 
 }

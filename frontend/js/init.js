@@ -1,3 +1,4 @@
+var sconn;
 var game = new Phaser.Game(600, 600, Phaser.AUTO, 'game');
 
 game.state.add('BootState', BootState);
